@@ -1,54 +1,48 @@
 #include <Arduino.h>
+
 /**
- * @file main.ino
- * @brief Embedded Temperature and Humidity Monitoring using DHT11
- * @author YOUR_NAME
- * @date YYYY-MM-DD
+ * @file main.cpp
+ * @brief Embedded Touch Detection System using TTP223
+ * @author yatendraguptacsaiml24-hub (Yatendra Kumar Gupta)
+ * @date 20-02-2026
  *
  * @details
- * This program reads environmental data from the DHT11 sensor
- * and displays temperature and humidity values on Serial Monitor.
- * Students must complete the TODO sections.
+ * Reads digital touch input from a TTP223 touch sensor and prints
+ * structured messages to the Serial Monitor every 300 ms.
  */
 
-#include <DHT.h>
+const uint8_t touchPin = 2;
+int touchState = 0;
 
-// TODO 1:
-// Define the DHT data pin (Use digital pin 2)
-
-// TODO 2:
-// Define the DHT sensor type (DHT11)
-
-// TODO 3:
-// Create a DHT object using the defined pin and sensor type
-
+/**
+ * @brief Initialize Serial and touch input.
+ *
+ * @details
+ * Configures the Serial Monitor at 9600 baud and sets the touch
+ * sensor pin mode to INPUT. Prints an initialization banner.
+ */
 void setup() {
-
-    // TODO 4:
-    // Initialize Serial communication (9600 baud rate)
-
-    // TODO 5:
-    // Initialize the DHT sensor
-
-    // TODO 6:
-    // Print a system initialization message
+    Serial.begin(9600);
+    pinMode(touchPin, INPUT);
+    Serial.println("=== TTP223 Touch Detection System Initialized ===");
 }
 
+/**
+ * @brief Poll the TTP223 sensor and report touch state.
+ *
+ * @details
+ * Reads the digital state from `touchPin`. If the sensor output is
+ * HIGH, prints "Touch Detected"; otherwise prints "No Touch".
+ * The check runs repeatedly with a 300 ms delay between readings.
+ */
 void loop() {
+    touchState = digitalRead(touchPin);
 
-    // TODO 7:
-    // Read humidity value from sensor
+    if (touchState == HIGH) {
+        Serial.println("Touch Detected");
+    } else {
+        Serial.println("No Touch");
+    }
 
-    // TODO 8:
-    // Read temperature value from sensor
-
-    // TODO 9:
-    // Check if either reading failed using isnan()
-    // If failed, print error message and return
-
-    // TODO 10:
-    // Print formatted temperature and humidity values
-
-    // TODO 11:
-    // Add a 2-second delay before next reading
+    delay(300);
 }
